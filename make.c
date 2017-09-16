@@ -235,13 +235,9 @@ S2 make (S2 force_build_all)
 
     if (parsed_line.type == LIBRARY)
     {
-        strcpy (run_shell, comp.archiver);
-        strcat (run_shell, " ");
-        strcat (run_shell, parsed_line.aflags);
-        strcat (run_shell, " ");
-        strcat (run_shell, parsed_line.name);
-        strcat (run_shell, " ");
-
+        strcpy (run_shell, comp.c);
+        strcat (run_shell, " -o out.o ");
+        
         for (i = 0; i <= parsed_line.sources_ind; i++)
         {
             str_len = strlen (parsed_line.sources[i]);
@@ -280,6 +276,22 @@ S2 make (S2 force_build_all)
             error = 1;
         }
 
+        
+        strcpy (run_shell, comp.archiver);
+        strcat (run_shell, " ");
+        strcat (run_shell, parsed_line.aflags);
+        strcat (run_shell, " ");
+        strcat (run_shell, parsed_line.name);
+        strcat (run_shell, " out.o");
+        
+        printf ("'%s'\n", run_shell);
+
+        if (run_process(run_shell) != 0)
+        {
+            printf ("build ERROR!\n");
+            error = 1;
+        }
+        
         // ranlib
 
 #if OS_LINUX
