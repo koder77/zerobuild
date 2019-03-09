@@ -1,16 +1,19 @@
 zerobuild 1.0.1
     Parser now accepts "," inside cflags and lflags strings.
     Now a different makefile name can be used:
-    
+
     zerobuild foobar.txt
-    
-- Stefan Pietzonke <jay-t@gmx.net>  Thu 14 Sep 2017 22:00 +0200
+
+	Now "zerobuild force" works too.
+	Or "zerobuild zerobuild.txt force"
+
+- Stefan Pietzonke <jay-t@gmx.net>  Sat 9 Mar 2019 14:00 +0200
 
 zerobuild (alpha)
     Parser: now global includes can be defined at the beginning of the sources list.
     The whole project gets rebuild if a global include file was modified!
     This is how it looks like:
-    
+
 ------------ snip -----
     # zerobuild makefile
 
