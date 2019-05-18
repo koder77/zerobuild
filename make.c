@@ -3,6 +3,10 @@
 extern struct parsed_line parsed_line;
 extern struct comp comp;
 
+// protos
+S4 run_process (U1 *name);
+char *fgets_uni (char *str, int len, FILE *fptr);
+
 S2 make_timestamp_dir ()
 {
 #if OS_LINUX || OS_WINDOWS
@@ -38,27 +42,27 @@ S2 check_timestamp (U1 *filename)
     time_t timest_curr, timest_last;
 
     S4 str_len;
-    
+
     U1 objfilename[MAXSTRLEN];
     FILE *objfile;
-    
+
     struct stat st;
 
     U1 filename_curr[MAXSTRLEN], filename_last[MAXSTRLEN];
 
-    
+
     // try to open object file
     strcpy (objfilename, filename);
     str_len = strlen (objfilename);
     objfilename[str_len - 1] = 'o';
-    
+
     if ((objfile = fopen (objfilename, "r")) == NULL)
     {
         return (1);
-        
+
         // build object file
     }
-    
+
     // generate timestamp of source file
     if (stat (filename, &st) != 0)
     {
@@ -146,7 +150,7 @@ S2 make (S2 force_build_all)
 
     S2 ret;
     // S2 force_build_all = 0;
-    
+
     if (check_timestamp_dir () != 0)
     {
         error = 1;
@@ -167,7 +171,7 @@ S2 make (S2 force_build_all)
         {
             if (ret == 0) continue;
         }
-        
+
         str_len = strlen (parsed_line.sources[i]);
 
         if (str_len >= 4)
@@ -183,8 +187,8 @@ S2 make (S2 force_build_all)
                 if (parsed_line.sources[i][str_len - 1] == 'h' && parsed_line.sources[i][str_len - 2] == '.')
                 {
                     // global header file changed:
-                    // force build all 
-                    
+                    // force build all
+
                     force_build_all = 1;
                     continue;
                 }
@@ -201,14 +205,14 @@ S2 make (S2 force_build_all)
             strcat (run_shell, parsed_line.includes[inc]);
             strcat (run_shell, " ");
         }
-        
+
         strcat (run_shell, parsed_line.cflags);
         strcat (run_shell, " -c -o ");
 
         strcat (run_shell, parsed_line.sources[i]);
-        
+
         str_len = strlen (run_shell);
-        
+
         run_shell[str_len - 1] = 'o';   // change suffix to object file
 
         strcat (run_shell, " ");
@@ -237,7 +241,7 @@ S2 make (S2 force_build_all)
     {
         strcpy (run_shell, comp.c);
         strcat (run_shell, " -o out.o ");
-        
+
         for (i = 0; i <= parsed_line.sources_ind; i++)
         {
             str_len = strlen (parsed_line.sources[i]);
@@ -276,14 +280,14 @@ S2 make (S2 force_build_all)
             error = 1;
         }
 
-        
+
         strcpy (run_shell, comp.archiver);
         strcat (run_shell, " ");
         strcat (run_shell, parsed_line.aflags);
         strcat (run_shell, " ");
         strcat (run_shell, parsed_line.name);
         strcat (run_shell, " out.o");
-        
+
         printf ("'%s'\n", run_shell);
 
         if (run_process(run_shell) != 0)
@@ -291,7 +295,7 @@ S2 make (S2 force_build_all)
             printf ("build ERROR!\n");
             error = 1;
         }
-        
+
         // ranlib
 
 #if OS_LINUX
@@ -365,6 +369,3 @@ S2 make (S2 force_build_all)
         return (1);
     }
 }
-
-
-

@@ -4,6 +4,9 @@
 struct parsed_line parsed_line;
 struct comp comp;
 
+// protos
+S2 make (S2 force_build_all);
+
 S2 sources_line = 0;
 S2 includes_line = 0;
 S2 objects_line = 0;
@@ -229,7 +232,7 @@ S2 get_assign (U1 *str, U1 *ret, S2 ret_size, S2 start)
     return (0);
 }
 
-get_assign_in_quote (U1 *str, U1 *ret, S2 ret_size, S2 start)
+S2 get_assign_in_quote (U1 *str, U1 *ret, S2 ret_size, S2 start)
 {
 	S2 i, str_len, ret_ind = -1;
     U1 found_end = 0;

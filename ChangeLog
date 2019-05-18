@@ -7,7 +7,10 @@ zerobuild 1.0.1
 	Now "zerobuild force" works too.
 	Or "zerobuild zerobuild.txt force"
 
-- Stefan Pietzonke <jay-t@gmx.net>  Sat 9 Mar 2019 14:00 +0200
+	New: added protos.
+
+- Stefan Pietzonke <jay-t@gmx.net>  Sat 18 May 2019 21:27 +0200
+
 
 zerobuild (alpha)
     Parser: now global includes can be defined at the beginning of the sources list.
