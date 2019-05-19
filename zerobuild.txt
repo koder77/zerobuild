@@ -3,4 +3,4 @@
 [executable, name = zerobuild2]
 sources = global.h, parser.c, make.c, process.c
 
-ccompiler = clang-3.9
+ccompiler = clang

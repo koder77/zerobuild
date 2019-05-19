@@ -1,3 +1,9 @@
+zerobuild - 1.0.2
+	Cleaned up code with -Wall compile.
+
+- Stefan Pietzonke <jay-t@gmx.net>  Sun 19 May 2019 16:40 +0200
+
+
 zerobuild 1.0.1
     Parser now accepts "," inside cflags and lflags strings.
     Now a different makefile name can be used:

@@ -36,7 +36,7 @@ S2 check_timestamp_dir ()
 
 S2 check_timestamp (U1 *filename)
 {
-    FILE *file_curr, *file_last;
+    FILE *file_last;
     U1 *read;
     U1 buf[MAXSTRLEN];
     time_t timest_curr, timest_last;
@@ -48,7 +48,7 @@ S2 check_timestamp (U1 *filename)
 
     struct stat st;
 
-    U1 filename_curr[MAXSTRLEN], filename_last[MAXSTRLEN];
+    U1 filename_last[MAXSTRLEN];
 
 
     // try to open object file
@@ -87,7 +87,7 @@ S2 check_timestamp (U1 *filename)
             return (-1);
         }
 
-        if (fprintf (file_last, "%u\n", timest_curr) < 0)
+        if (fprintf (file_last, "%li\n", timest_curr) < 0)
         {
             printf ("ERROR: can't update timestamp: '%s'\n", filename_last);
             fclose (file_last);
@@ -105,7 +105,7 @@ S2 check_timestamp (U1 *filename)
 
         fseek (file_last, SEEK_SET, 0L);
 
-        if (fprintf (file_last, "%u\n", timest_curr) < 0)
+        if (fprintf (file_last, "%li\n", timest_curr) < 0)
         {
             printf ("ERROR: can't update timestamp: '%s'\n", filename_last);
             fclose (file_last);
@@ -124,7 +124,7 @@ S2 check_timestamp (U1 *filename)
         // update last timestamp
 
         fseek (file_last, SEEK_SET, 0L);
-        if (fprintf (file_last, "%u\n", timest_curr) < 0)
+        if (fprintf (file_last, "%li\n", timest_curr) < 0)
         {
             printf ("ERROR: can't update timestamp: '%s'\n", filename_last);
             return (-1);

@@ -302,8 +302,6 @@ S2 parse_line (U1 *line)
     S2 block_start = -1, block_end = -1, pos, search_start;
     char *ret;
 
-    U1 buf[4096];
-
     U1 line_end = 0;
 
     line_len = strlen (line);
@@ -847,7 +845,7 @@ int main (int ac, char *av[])
     strcpy (parsed_line.aflags, "");
     strcpy (parsed_line.lflags, "");
 
-    printf ("zerobuild V1.0.1\n");
+    printf ("zerobuild V1.0.2\n");
 
 	printf ("DEBUG: ac: %i\n", ac);
 

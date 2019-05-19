@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include <stdint.h>
 
-typedef unsigned char           U1;
+typedef char		            U1;
 typedef int16_t                 S2;     /* INT     */
 typedef int32_t                 S4;     /* LONGINT */
 
@@ -101,5 +101,3 @@ struct comp
     U1 cplusplus[MAXSTRLEN];
     U1 archiver[MAXSTRLEN];
 };
-
-
