@@ -67,6 +67,7 @@ S2 check_timestamp (U1 *filename)
     if (stat (filename, &st) != 0)
     {
         printf ("check_timestamp: ERROR %s\n", filename);
+		fclose (objfile);
         return (-1);
     }
 
@@ -84,7 +85,8 @@ S2 check_timestamp (U1 *filename)
         if ((file_last = fopen (filename_last, "w")) == NULL)
         {
             printf ("ERROR: can't create last timestamp: '%s'\n", filename_last);
-            return (-1);
+			fclose (objfile);
+			return (-1);
         }
 
         if (fprintf (file_last, "%li\n", timest_curr) < 0)
@@ -95,6 +97,7 @@ S2 check_timestamp (U1 *filename)
         }
 
         fclose (file_last);
+		fclose (objfile);
         return (1);         // code for build
     }
 
@@ -109,10 +112,12 @@ S2 check_timestamp (U1 *filename)
         {
             printf ("ERROR: can't update timestamp: '%s'\n", filename_last);
             fclose (file_last);
+			fclose (objfile);
             return (-1);
         }
 
         fclose (file_last);
+		fclose (objfile);
         return (1);         // code for build
     }
 
@@ -127,6 +132,8 @@ S2 check_timestamp (U1 *filename)
         if (fprintf (file_last, "%li\n", timest_curr) < 0)
         {
             printf ("ERROR: can't update timestamp: '%s'\n", filename_last);
+			fclose (file_last);
+			fclose (objfile);
             return (-1);
         }
 
@@ -136,7 +143,7 @@ S2 check_timestamp (U1 *filename)
     }
     else
     {
-
+		fclose (objfile);
         return (0);     // code for don't build as file not changed
     }
 }

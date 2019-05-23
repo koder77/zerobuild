@@ -812,6 +812,7 @@ S2 parse_makefile (U1 *makefile)
             if (parse_line (buf) != 0)
             {
                 printf ("ERROR parsing makefile '%s'\n", makefile);
+				fclose (fptr);
                 return (1);
             }
         }
@@ -863,7 +864,7 @@ int main (int ac, char *av[])
 
         if (ac == 2)
         {
-			printf ("DEBUG: av[1]: ''%s'\n", av[1]);
+			printf ("DEBUG: av[1]: '%s'\n", av[1]);
 			if (strcmp (av[1], "force") == 0)
             {
                 printf ("FORCE FULL BUILD!\n");
