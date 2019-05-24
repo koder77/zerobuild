@@ -6,6 +6,7 @@ extern struct comp comp;
 // protos
 S4 run_process (U1 *name);
 char *fgets_uni (char *str, int len, FILE *fptr);
+size_t strlen_safe (const char * str, int maxlen);
 
 S2 make_timestamp_dir ()
 {
@@ -53,7 +54,7 @@ S2 check_timestamp (U1 *filename)
 
     // try to open object file
     strcpy (objfilename, filename);
-    str_len = strlen (objfilename);
+    str_len = strlen_safe (objfilename, MAXSTRLEN);
     objfilename[str_len - 1] = 'o';
 
     if ((objfile = fopen (objfilename, "r")) == NULL)
@@ -179,7 +180,7 @@ S2 make (S2 force_build_all)
             if (ret == 0) continue;
         }
 
-        str_len = strlen (parsed_line.sources[i]);
+        str_len = strlen_safe (parsed_line.sources[i], MAXSTRLEN);
 
         if (str_len >= 4)
         {
@@ -218,7 +219,7 @@ S2 make (S2 force_build_all)
 
         strcat (run_shell, parsed_line.sources[i]);
 
-        str_len = strlen (run_shell);
+        str_len = strlen_safe (run_shell, MAXSTRLEN);
 
         run_shell[str_len - 1] = 'o';   // change suffix to object file
 
@@ -251,11 +252,11 @@ S2 make (S2 force_build_all)
 
         for (i = 0; i <= parsed_line.sources_ind; i++)
         {
-            str_len = strlen (parsed_line.sources[i]);
+            str_len = strlen_safe (parsed_line.sources[i], MAXSTRLEN);
             if (parsed_line.sources[i][str_len - 1] != 'h')
             {
                 strcat (run_shell, parsed_line.sources[i]);
-                str_len = strlen (run_shell);
+                str_len = strlen_safe (run_shell, MAXSTRLEN);
                 run_shell[str_len - 1] = 'o';   // change suffix to object file
 
                 if (i <= parsed_line.sources_ind - 1) strcat (run_shell, " ");
@@ -327,11 +328,11 @@ S2 make (S2 force_build_all)
 
         for (i = 0; i <= parsed_line.sources_ind; i++)
         {
-            str_len = strlen (parsed_line.sources[i]);
+            str_len = strlen_safe (parsed_line.sources[i], MAXSTRLEN);
             if (parsed_line.sources[i][str_len - 1] != 'h')
             {
                 strcat (run_shell, parsed_line.sources[i]);
-                str_len = strlen (run_shell);
+                str_len = strlen_safe (run_shell, MAXSTRLEN);
                 run_shell[str_len - 1] = 'o';   // change suffix to object file
 
                 if (i <= parsed_line.sources_ind - 1) strcat (run_shell, " ");

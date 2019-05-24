@@ -1,7 +1,8 @@
 zerobuild - 1.0.2
 	Cleaned up code with -Wall compile.
+	Code cleanup: strlen_safe in place of strlen.
 
-- Stefan Pietzonke <jay-t@gmx.net>  Sun 19 May 2019 16:40 +0200
+- Stefan Pietzonke <jay-t@gmx.net>  Fri 24 May 2019 18:15 +0200
 
 
 zerobuild 1.0.1

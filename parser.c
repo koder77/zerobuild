@@ -6,6 +6,7 @@ struct comp comp;
 
 // protos
 S2 make (S2 force_build_all);
+size_t strlen_safe (const char * str, int maxlen);
 
 S2 sources_line = 0;
 S2 includes_line = 0;
@@ -90,7 +91,7 @@ void convtabs (U1 *str)
 {
     S2 i, end;
 
-    end = strlen (str) - 1;
+    end = strlen_safe (str, MAXSTRLEN) - 1;
 
     for (i = 0; i <= end; i++)
     {
@@ -105,7 +106,7 @@ void remove_newline (U1 *str)
 {
     S2 line_len;
 
-    line_len = strlen (str) - 1;
+    line_len = strlen_safe (str, MAXSTRLEN) - 1;
     if (str[line_len] == '\n')
     {
         str[line_len] = '\0';
@@ -116,7 +117,7 @@ S2 search_char (U1 *str, U1 search_char, S2 search_start)
 {
     S2 i, str_len;
 
-    str_len = strlen (str);
+    str_len = strlen_safe (str, MAXSTRLEN);
     if (search_start >= str_len || search_start < 0)
     {
         return (-1);        // index out of range
@@ -139,7 +140,7 @@ S2 get_assign (U1 *str, U1 *ret, S2 ret_size, S2 start)
     U1 found_end = 0;
     U1 found_quote = 0;
 
-    str_len = strlen (str);
+    str_len = strlen_safe (str, MAXSTRLEN);
     if (start >= str_len || start < 0)
     {
         return (-1);        // start out of range
@@ -238,7 +239,7 @@ S2 get_assign_in_quote (U1 *str, U1 *ret, S2 ret_size, S2 start)
     U1 found_end = 0;
     U1 found_quote = 0;
 
-    str_len = strlen (str);
+    str_len = strlen_safe (str, MAXSTRLEN);
     if (start >= str_len || start < 0)
     {
         return (-1);        // start out of range
@@ -304,7 +305,7 @@ S2 parse_line (U1 *line)
 
     U1 line_end = 0;
 
-    line_len = strlen (line);
+    line_len = strlen_safe (line, MAXSTRLEN);
 
 
     // check if line begins with a #

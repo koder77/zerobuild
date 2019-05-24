@@ -1,6 +1,6 @@
 # zerobuild makefile
 
 [executable, name = zerobuild2]
-sources = global.h, parser.c, make.c, process.c
+sources = global.h, parser.c, make.c, process.c, string.c
 
 ccompiler = clang
