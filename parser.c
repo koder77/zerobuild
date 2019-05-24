@@ -45,7 +45,10 @@ char *fgets_uni (char *str, int len, FILE *fptr)
             case '\n':
                 /* check for '\n\r\' */
 
-                nextch = fgetc (fptr);
+				if (! feof (fptr))
+				{
+                	nextch = fgetc (fptr);
+				}
                 if (! feof (fptr))
                 {
                     if (nextch != '\r')
@@ -69,7 +72,10 @@ char *fgets_uni (char *str, int len, FILE *fptr)
             break;
         }
 
-        ch = fgetc (fptr);
+		if (! feof (fptr))
+		{
+        	ch = fgetc (fptr);
+		}
     }
 
     if (feof (fptr))

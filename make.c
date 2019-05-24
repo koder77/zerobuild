@@ -94,6 +94,7 @@ S2 check_timestamp (U1 *filename)
         {
             printf ("ERROR: can't update timestamp: '%s'\n", filename_last);
             fclose (file_last);
+			fclose (objfile);
             return (-1);
         }
 
@@ -139,7 +140,7 @@ S2 check_timestamp (U1 *filename)
         }
 
         fclose (file_last);
-
+		fclose (objfile);
         return (1);     // code for build
     }
     else
