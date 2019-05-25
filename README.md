@@ -14,7 +14,7 @@ I now compiled my Nano VM with zerobuild!
 
 Here is the zerobuild.txt of zerobuild:
 
-```
+<pre>
 -------- snip ---------------
 # zerobuild makefile
 
@@ -23,22 +23,25 @@ sources = global.h, parser.c, make.c, process.c
 
 ccompiler = clang-3.9
 -------- snip ---------------
-```
+</pre>
 
 That's it!
 
 You can use a different name as "zerobuild.txt" too:
 
+<pre>
 $ zerobuild foobar.txt
+</pre>
 
 And to force a full build:
 
+<pre>
 $ zerobuild force
-
+</pre>
 
 Here is an example of how to build a shared library:
 
-```
+<pre>
 ------------------ snip ------
 # zerobuild makefile
 
@@ -55,6 +58,6 @@ aflags = "cru"
 cflags = "-g -ffast-math -fomit-frame-pointer -O3 -march=native"
 lflags = "-lc -shared"
 ----------------- snip -------
-```
+</pre>
 
-Stefan Pietzonke  15.09.2017
+Stefan Pietzonke  25.05.2019
