@@ -55,6 +55,8 @@ cflags = -O0 -g
 
 #define LFLAGS                  "lflags"
 
+#define STRIPPED 				"strip"
+
 #define NOTDEF                  0
 #define EXECUTABLE              1
 #define LIBRARY                 2
@@ -82,6 +84,7 @@ struct parsed_line
 {
     U1 type;                        // executable, library
     U1 buildtype;                   // static, shared
+	U1 stripped;
     U1 name[MAXSTRLEN];
     U1 sources[MAXSOURCES][MAXSTRLEN];
     S4 sources_ind;

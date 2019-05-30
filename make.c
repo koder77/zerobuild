@@ -366,6 +366,21 @@ S2 make (S2 force_build_all)
         }
     }
 
+	if (parsed_line.stripped == TRUE)
+	{
+		strcpy (run_shell, "strip ");
+		strcat (run_shell, parsed_line.name);
+
+		if (run_process (run_shell) != 0)
+        {
+            printf ("build ERROR: stripping binary! '%s'\n", parsed_line.name);
+            error = 1;
+        }
+		else
+		{
+			printf ("binary: '%s' stripped!\n", parsed_line.name);
+		}
+	}
  make_end:
     if (error == 0)
     {

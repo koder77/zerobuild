@@ -4,3 +4,4 @@
 sources = global.h, parser.c, make.c, process.c, string.c
 
 ccompiler = clang
+strip

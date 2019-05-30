@@ -786,6 +786,15 @@ S2 parse_line (U1 *line)
 
             printf ("lflags = '%s'\n", parsed_line.lflags);
         }
+
+		ret = strstr (line, STRIPPED);
+		if (ret != 0)
+		{
+			// pos = ret - line;
+
+			// set stripped binary flag
+			parsed_line.stripped = TRUE;
+		}
     }
     return (0);
 }
@@ -839,6 +848,7 @@ int main (int ac, char *av[])
 
     parsed_line.type = NOTDEF;
     parsed_line.buildtype = NOTDEF;
+	parsed_line.stripped = FALSE;
 
     strcpy (comp.c, "");
     strcpy (comp.cplusplus, "");
