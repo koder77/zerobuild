@@ -2,6 +2,8 @@ ZEROBUILD
 =========
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b929bcf0782b4b09b29f5cd090f05a59)](https://www.codacy.com/app/koder77/zerobuild?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=koder77/zerobuild&amp;utm_campaign=Badge_Grade)
 
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P2Y3KP)
+
 Zerobuild is a very simple build tool for C programs.
 I wrote it because sometimes I did not have an environment with a full bash & automake tools.
 
