@@ -14,6 +14,15 @@ S4 run_process (U1 *name)
     S4 ret;
 
     ret = system (name);
+	if (ret == -1)
+	{
+		perror ("run_shell:\n");
+	}
+	else
+	{
+		ret = WEXITSTATUS (ret);
+	}
+
     return (ret);
 }
 
@@ -27,7 +36,7 @@ S4 run_process (U1 *name)
 {
     S4 ret;
     S4 exit_code;
-    
+
     STARTUPINFO start_info;
     PROCESS_INFORMATION process_info;
 

@@ -5,7 +5,9 @@ zerobuild - 1.0.2
 	New: 'strip' flag to strip binary.
 	See zerobuild.txt makefile!
 
-- Stefan Pietzonke <jay-t@gmx.net>  Thu 30 May 2019 18:58 +0200
+	New: bugfixes, and updates.
+
+- Stefan Pietzonke <jay-t@gmx.net>  Sun 1 Sep 2019 12:00 +0200
 
 
 zerobuild 1.0.1

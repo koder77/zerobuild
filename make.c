@@ -35,6 +35,35 @@ S2 check_timestamp_dir ()
     return (0);
 }
 
+S2 check_filename (U1 *filename)
+{
+	S4 i;
+	S4 str_len;
+
+	str_len = strlen_safe (filename, MAXSTRLEN);
+
+	for (i = 0; i < str_len; i++)
+	{
+		// check for "../" in filename
+		// and return 1 if found, and 0 if not
+		if (filename[i] == '.')
+		{
+			if (i + 2 < str_len)
+			{
+				if (filename[i + 1] == '.')
+				{
+					if (filename[i + 2] == '/')
+					{
+						printf ("check_filename: found '../' in filename, can't use timestamp: '%s' force build!\n", filename);
+						return (1);
+					}
+				}
+			}
+		}
+	}
+	return (0);
+}
+
 S2 check_timestamp (U1 *filename)
 {
     FILE *file_last;
@@ -51,6 +80,11 @@ S2 check_timestamp (U1 *filename)
 
     U1 filename_last[MAXSTRLEN];
 
+	if (check_filename (filename) == 1)
+	{
+		// force build
+		return (2);
+	}
 
     // try to open object file
     strcpy (objfilename, filename);
@@ -179,6 +213,17 @@ S2 make (S2 force_build_all)
         if (force_build_all == 0)
         {
             if (ret == 0) continue;
+
+			if (ret == -1)
+	        {
+	           	error = 1;
+	          	goto make_end;
+		  	}
+
+			if (ret == 2)
+			{
+				force_build_all = 1;
+			}
         }
 
         str_len = strlen_safe (parsed_line.sources[i], MAXSTRLEN);
@@ -231,21 +276,23 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-        if (run_process(run_shell) != 0)
+		ret = run_process (run_shell);
+        if (ret != 0)
         {
-            printf ("build ERROR!\n");
+            printf ("build ERROR! %i\n", ret);
             error = 1;
         }
     }
 
     // link
 
+/*
     if (remove (parsed_line.name) != 0)
     {
         printf ("build ERROR!\n");
         error = 1;
     }
-
+*/
     if (parsed_line.type == LIBRARY)
     {
         strcpy (run_shell, comp.c);
@@ -283,12 +330,12 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-        if (run_process(run_shell) != 0)
+		ret = run_process (run_shell);
+        if (ret != 0)
         {
-            printf ("build ERROR!\n");
+            printf ("build ERROR! %i\n", ret);
             error = 1;
         }
-
 
         strcpy (run_shell, comp.archiver);
         strcat (run_shell, " ");
@@ -299,9 +346,10 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-        if (run_process(run_shell) != 0)
+		ret = run_process (run_shell);
+		if (ret != 0)
         {
-            printf ("build ERROR!\n");
+            printf ("build ERROR! %i\n", ret);
             error = 1;
         }
 
@@ -313,9 +361,10 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-        if (run_process(run_shell) != 0)
+		ret = run_process (run_shell);
+		if (ret != 0)
         {
-            printf ("build ERROR!\n");
+            printf ("build ERROR! %i\n", ret);
             error = 1;
         }
 #endif
@@ -359,9 +408,10 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-        if (run_process(run_shell) != 0)
+		ret = run_process (run_shell);
+		if (ret != 0)
         {
-            printf ("build ERROR!\n");
+            printf ("build ERROR! %i\n", ret);
             error = 1;
         }
     }
@@ -371,7 +421,8 @@ S2 make (S2 force_build_all)
 		strcpy (run_shell, "strip ");
 		strcat (run_shell, parsed_line.name);
 
-		if (run_process (run_shell) != 0)
+		ret = run_process (run_shell);
+		if (ret != 0)
         {
             printf ("build ERROR: stripping binary! '%s'\n", parsed_line.name);
             error = 1;
