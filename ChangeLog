@@ -6,8 +6,11 @@ zerobuild - 1.0.2
 	See zerobuild.txt makefile!
 
 	New: bugfixes, and updates.
+	New: C compiler and C++ compiler can now be set as ENV variables too:
 
-- Stefan Pietzonke <jay-t@gmx.net>  Sun 1 Sep 2019 12:00 +0200
+	ccompiler = $COMP
+
+- Stefan Pietzonke <jay-t@gmx.net>  Sun 14 Jun 2020 00:25 +0200
 
 
 zerobuild 1.0.1

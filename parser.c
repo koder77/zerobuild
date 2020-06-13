@@ -298,11 +298,31 @@ S2 get_assign_in_quote (U1 *str, U1 *ret, S2 ret_size, S2 start)
     ret[ret_ind] = '\0';
 	return (0);
 }
+
+void get_env_var (U1 *str)
+{
+    // strip away the leading '$' sign from ENV variable name
+
+    S2 i, j = 0;
+    S2 str_len;
+
+    str_len = strlen_safe (str, MAXSTRLEN);
+
+    for (i = 1; i < str_len; i++)
+    {
+        str[j] = str[i];
+        j++;
+    }
+    str[j] = '\0';
+}
+
 S2 parse_line (U1 *line)
 {
     S2 line_len;
     S2 block_start = -1, block_end = -1, pos, search_start;
     char *ret;
+
+    char *env;
 
     U1 line_end = 0;
 
@@ -696,6 +716,20 @@ S2 parse_line (U1 *line)
                 return (1);
             }
 
+            // check if env variable is used
+            if (comp.c[0] == '$')
+            {
+                get_env_var (comp.c);
+                env = getenv (comp.c);
+                if (env == NULL)
+                {
+                    printf ("ERROR: C compiler env variable not found: ''%s'\n", comp.c);
+                    return (1);
+                }
+
+                strcpy (comp.c, env);
+            }
+
             printf ("ccompiler = '%s'\n", comp.c);
         }
 
@@ -716,6 +750,20 @@ S2 parse_line (U1 *line)
             {
                 printf ("syntax ERROR: can't get assign string!\n");
                 return (1);
+            }
+
+            // check if env variable is used
+            if (comp.cplusplus[0] == '$')
+            {
+                get_env_var (comp.cplusplus);
+                env = getenv (comp.cplusplus);
+                if (env == NULL)
+                {
+                    printf ("ERROR: c++ compiler env variable not found: ''%s'\n", comp.cplusplus);
+                    return (1);
+                }
+
+                strcpy (comp.cplusplus, env);
             }
 
             printf ("c++compiler = '%s'\n", comp.cplusplus);
