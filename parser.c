@@ -788,6 +788,20 @@ S2 parse_line (U1 *line)
                 return (1);
             }
 
+            // check if env variable is used
+            if (comp.archiver[0] == '$')
+            {
+                get_env_var (comp.archiver);
+                env = getenv (comp.archiver);
+                if (env == NULL)
+                {
+                    printf ("ERROR: C compiler env variable not found: ''%s'\n", comp.c);
+                    return (1);
+                }
+
+                strcpy (comp.archiver, env);
+            }
+
             printf ("archiver = '%s'\n", comp.archiver);
         }
 
