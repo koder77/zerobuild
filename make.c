@@ -196,9 +196,12 @@ S2 make (S2 force_build_all)
 
     if (check_timestamp_dir () != 0)
     {
-        error = 1;
-        printf ("ERROR: can't access .timest/ directory!");
-        goto make_end;
+        // error = 1;
+        printf ("ERROR: can't access .timest/ directory!\n");
+        // goto make_end;
+
+        // force full build, because we can't create .timest directory!!!
+        force_build_all = 1;
     }
 
     for (i = 0; i <= parsed_line.sources_ind; i++)
