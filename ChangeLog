@@ -1,3 +1,10 @@
+zerobuild - 1.0.3
+	Added "script" flag: this creates a make script which can be run as a shell build script.
+	This was needed on Cygwin to build the L1VM!
+
+- Stefan Pietzonke <jay-t@gmx.net>  Sat 10 Oct 2020 18:38 +0200
+
+
 zerobuild - 1.0.2
 	Cleaned up code with -Wall compile.
 	Code cleanup: strlen_safe in place of strlen.

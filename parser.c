@@ -12,6 +12,10 @@ S2 sources_line = 0;
 S2 includes_line = 0;
 S2 objects_line = 0;
 
+// create shell script only. don't run make process
+S2 create_script = 0;
+U1 script_name[] = "make-script.sh";
+
 char *fgets_uni (char *str, int len, FILE *fptr)
 {
     int ch, nextch;
@@ -920,25 +924,32 @@ int main (int ac, char *av[])
     strcpy (parsed_line.aflags, "");
     strcpy (parsed_line.lflags, "");
 
-    printf ("zerobuild V1.0.2\n");
+    printf ("zerobuild V1.0.3\n");
 
 	printf ("DEBUG: ac: %i\n", ac);
 
-	if (ac == 1)
+    if (ac == 1)
     {
         ret = parse_makefile ("zerobuild.txt");
     }
     else
     {
-        if (ac > 3)
+        if (ac > 4)
         {
-            printf ("zerobuild <makefile> <force>\n");
+            printf ("zerobuild <makefile> <force> <script>\n");
             exit (1);
         }
 
         if (ac == 2)
         {
 			printf ("DEBUG: av[1]: '%s'\n", av[1]);
+
+            if (strcmp (av[1], "script") == 0)
+            {
+                printf ("creating build script only!\n");
+                create_script = 1;
+            }
+
 			if (strcmp (av[1], "force") == 0)
             {
                 printf ("FORCE FULL BUILD!\n");
@@ -952,17 +963,34 @@ int main (int ac, char *av[])
         }
         if (ac == 3)
         {
+            if (strcmp (av[2], "script") == 0)
+            {
+                printf ("creating build script only!\n");
+                create_script = 1;
+            }
+
             if (strcmp (av[2], "force") == 0)
             {
                 printf ("FORCE FULL BUILD!\n");
                 force_build_all = 1;
             }
-            else
+            ret = parse_makefile (av[1]);
+        }
+
+        if (ac == 4)
+        {
+            if (strcmp (av[2], "force") == 0)
             {
-                // unknown flag!!!
-                printf ("zerobuild <makefile> <force>\n");
-                exit (1);
+                printf ("FORCE FULL BUILD!\n");
+                force_build_all = 1;
             }
+
+            if (strcmp (av[3], "script") == 0)
+            {
+                printf ("creating build script only!\n");
+                create_script = 1;
+            }
+
             ret = parse_makefile (av[1]);
         }
     }

@@ -3,6 +3,11 @@
 extern struct parsed_line parsed_line;
 extern struct comp comp;
 
+// create shell script only. don't run make process
+extern S2 create_script;
+extern U1 script_name;
+FILE *scriptf;
+
 // protos
 S4 run_process (U1 *name);
 char *fgets_uni (char *str, int len, FILE *fptr);
@@ -194,6 +199,27 @@ S2 make (S2 force_build_all)
     S2 ret;
     // S2 force_build_all = 0;
 
+    if (create_script == 1)
+    {
+        // fopen script file
+        scriptf = fopen (&script_name, "w");
+        if (scriptf == NULL)
+        {
+            // error
+            printf ("ERROR: can't create build script!\n");
+            error = 1;
+            goto make_end;
+        }
+        // write #!/bin/sh header
+
+        if (fprintf (scriptf, "#!/bin/sh\nrm *.o\nrm *.cpo\nrm *.so\n") < 0)
+        {
+            printf ("ERROR: can't write build script header!\n");
+            error = 1;
+            goto make_end;
+        }
+    }
+
     if (check_timestamp_dir () != 0)
     {
         // error = 1;
@@ -206,7 +232,7 @@ S2 make (S2 force_build_all)
 
     for (i = 0; i <= parsed_line.sources_ind; i++)
     {
-        ret = check_timestamp(parsed_line.sources[i]);
+        ret = check_timestamp (parsed_line.sources[i]);
         // if (ret == -1)
         // {
            //  error = 1;
@@ -279,11 +305,23 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-		ret = run_process (run_shell);
-        if (ret != 0)
+        if (create_script == 1)
         {
-            printf ("build ERROR! %i\n", ret);
-            error = 1;
+            if (fprintf (scriptf, "%s\n", run_shell) < 0)
+            {
+                printf ("ERROR: can't write build script!\n");
+                error = 1;
+                goto make_end;
+            }
+        }
+        else
+        {
+            ret = run_process (run_shell);
+            if (ret != 0)
+            {
+                printf ("build ERROR! %i\n", ret);
+                error = 1;
+            }
         }
     }
 
@@ -333,11 +371,24 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-		ret = run_process (run_shell);
-        if (ret != 0)
+
+        if (create_script == 1)
         {
-            printf ("build ERROR! %i\n", ret);
-            error = 1;
+            if (fprintf (scriptf, "%s\n", run_shell) < 0)
+            {
+                printf ("ERROR: can't write build script!\n");
+                error = 1;
+                goto make_end;
+            }
+        }
+        else
+        {
+            ret = run_process (run_shell);
+            if (ret != 0)
+            {
+                printf ("build ERROR! %i\n", ret);
+                 error = 1;
+            }
         }
 
         strcpy (run_shell, comp.archiver);
@@ -349,11 +400,23 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-		ret = run_process (run_shell);
-		if (ret != 0)
+        if (create_script == 1)
         {
-            printf ("build ERROR! %i\n", ret);
-            error = 1;
+            if (fprintf (scriptf, "%s\n", run_shell) < 0)
+            {
+                printf ("ERROR: can't write build script!\n");
+                error = 1;
+                goto make_end;
+            }
+        }
+        else
+        {
+            ret = run_process (run_shell);
+            if (ret != 0)
+            {
+                printf ("build ERROR! %i\n", ret);
+                error = 1;
+            }
         }
 
         // ranlib
@@ -364,11 +427,23 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-		ret = run_process (run_shell);
-		if (ret != 0)
+        if (create_script == 1)
         {
-            printf ("build ERROR! %i\n", ret);
-            error = 1;
+            if (fprintf (scriptf, "%s\n", run_shell) < 0)
+            {
+                printf ("ERROR: can't write build script!\n");
+                error = 1;
+                goto make_end;
+            }
+        }
+        else
+        {
+            ret = run_process (run_shell);
+            if (ret != 0)
+            {
+                printf ("build ERROR! %i\n", ret);
+                error = 1;
+            }
         }
 #endif
     }
@@ -411,11 +486,23 @@ S2 make (S2 force_build_all)
 
         printf ("'%s'\n", run_shell);
 
-		ret = run_process (run_shell);
-		if (ret != 0)
+        if (create_script == 1)
         {
-            printf ("build ERROR! %i\n", ret);
-            error = 1;
+            if (fprintf (scriptf, "%s\n", run_shell) < 0)
+            {
+                printf ("ERROR: can't write build script!\n");
+                error = 1;
+                goto make_end;
+            }
+        }
+        else
+        {
+            ret = run_process (run_shell);
+            if (ret != 0)
+            {
+                printf ("build ERROR! %i\n", ret);
+                error = 1;
+            }
         }
     }
 
@@ -424,18 +511,32 @@ S2 make (S2 force_build_all)
 		strcpy (run_shell, "strip ");
 		strcat (run_shell, parsed_line.name);
 
-		ret = run_process (run_shell);
-		if (ret != 0)
+        if (create_script == 1)
         {
-            printf ("build ERROR: stripping binary! '%s'\n", parsed_line.name);
-            error = 1;
+            if (fprintf (scriptf, "%s\n", run_shell) < 0)
+            {
+                printf ("ERROR: can't write build script!\n");
+                error = 1;
+                goto make_end;
+            }
         }
-		else
-		{
-			printf ("binary: '%s' stripped!\n", parsed_line.name);
+        else
+        {
+            ret = run_process (run_shell);
+            if (ret != 0)
+            {
+                printf ("build ERROR: stripping binary! '%s'\n", parsed_line.name);
+                error = 1;
+            }
+            else
+            {
+                printf ("binary: '%s' stripped!\n", parsed_line.name);
+            }
 		}
 	}
  make_end:
+    if (create_script == 1) fclose (scriptf);
+
     if (error == 0)
     {
         printf ("build: successfull\n");
