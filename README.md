@@ -9,8 +9,8 @@ PROS: very simple syntax of "makefiles". Zerobuild is only one executable.
 
 CONS: you have to set up search paths by "hand".
 
-TODO: check if .h files are changed.
-In use zerobuild to build my L1VM!
+TODO: check if .h files are changed. <br>
+I use zerobuild to build my L1VM!
 
 Here is the zerobuild.txt of zerobuild:
 
