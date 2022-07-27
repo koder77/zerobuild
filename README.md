@@ -10,7 +10,7 @@ PROS: very simple syntax of "makefiles". Zerobuild is only one executable.
 CONS: you have to set up search paths by "hand".
 
 TODO: check if .h files are changed.
-I now compiled my Nano VM with zerobuild!
+In use zerobuild to build my L1VM!
 
 Here is the zerobuild.txt of zerobuild:
 
@@ -60,4 +60,4 @@ lflags = "-lc -shared"
 ----------------- snip -------
 </pre>
 
-Stefan Pietzonke  13.08.2021
+Stefan Pietzonke  27. July 2022
