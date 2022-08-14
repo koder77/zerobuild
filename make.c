@@ -215,7 +215,7 @@ S2 make (S2 force_build_all)
 
         // write #!/bin/sh header
 
-        if (fprintf (scriptf, "#!/bin/sh\nrm *.o\nrm *.cpo\nrm *.so\n") < 0)
+        if (fprintf (scriptf, "#!/bin/bash\nrm *.o\nrm *.cpo\nrm *.so\n") < 0)
         {
             printf ("ERROR: can't write build script header!\n");
             error = 1;

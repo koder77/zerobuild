@@ -1,7 +1,8 @@
 zerobuild - 1.0.4
 	NEW: now C++ projects can be build with "force" flag set!
+	NEW: build script output now uses "/bin/bash".
 
-- Stefan Pietzonke <jay-t@gmx.net>  Sun 14 Aug 2022 12:47 +0200
+- Stefan Pietzonke <jay-t@gmx.net>  Sun 14 Aug 2022 20:38 +0200
 
 
 zerobuild - 1.0.3
