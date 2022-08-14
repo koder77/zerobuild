@@ -1,3 +1,9 @@
+zerobuild - 1.0.4
+	NEW: now C++ projects can be build with "force" flag set!
+
+- Stefan Pietzonke <jay-t@gmx.net>  Sun 14 Aug 2022 12:47 +0200
+
+
 zerobuild - 1.0.3
 	Added "script" flag: this creates a make script which can be run as a shell build script.
 	This was needed on Cygwin to build the L1VM!

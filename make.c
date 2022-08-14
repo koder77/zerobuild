@@ -199,6 +199,8 @@ S2 make (S2 force_build_all)
     S2 ret;
     // S2 force_build_all = 0;
 
+    U1 cplusplus = 0;
+
     if (create_script == 1)
     {
         // fopen script file
@@ -210,6 +212,7 @@ S2 make (S2 force_build_all)
             error = 1;
             goto make_end;
         }
+
         // write #!/bin/sh header
 
         if (fprintf (scriptf, "#!/bin/sh\nrm *.o\nrm *.cpo\nrm *.so\n") < 0)
@@ -232,6 +235,8 @@ S2 make (S2 force_build_all)
 
     for (i = 0; i <= parsed_line.sources_ind; i++)
     {
+        //printf ("DEBUG: make loop start...\n");
+
         ret = check_timestamp (parsed_line.sources[i]);
         // if (ret == -1)
         // {
@@ -256,7 +261,6 @@ S2 make (S2 force_build_all)
         }
 
         str_len = strlen_safe (parsed_line.sources[i], MAXSTRLEN);
-
         if (str_len >= 4)
         {
             if (parsed_line.sources[i][str_len - 1] == 'p' && parsed_line.sources[i][str_len - 2] == 'p' && parsed_line.sources[i][str_len - 3] == 'c' && parsed_line.sources[i][str_len - 4] == '.')
@@ -264,6 +268,7 @@ S2 make (S2 force_build_all)
                 // .cpp = C++ compiler
 
                 strcpy (run_shell, comp.cplusplus);
+                cplusplus = 1;    // set flag for linking stage
             }
             else
             {
@@ -336,7 +341,14 @@ S2 make (S2 force_build_all)
 */
     if (parsed_line.type == LIBRARY)
     {
-        strcpy (run_shell, comp.c);
+        if (cplusplus == 1)
+        {
+            strcpy (run_shell, comp.cplusplus);
+        }
+        else
+        {
+            strcpy (run_shell, comp.c);
+        }
         strcat (run_shell, " -o out.o ");
 
         for (i = 0; i <= parsed_line.sources_ind; i++)
@@ -449,7 +461,15 @@ S2 make (S2 force_build_all)
     }
     else
     {
-        strcpy (run_shell, comp.c);
+        if (cplusplus == 1)
+        {
+            strcpy (run_shell, comp.cplusplus);
+        }
+        else
+        {
+            strcpy (run_shell, comp.c);
+        }
+
         strcat (run_shell, " -o ");
         strcat (run_shell, parsed_line.name);
         strcat (run_shell, " ");
