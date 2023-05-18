@@ -69,7 +69,7 @@ cflags = -O0 -g
 #define MAXINCLUDES             100
 #define MAXOBJECTS              100
 
-#if __linux__ || __CYGWIN__ || __MACH__
+#if __linux__ || __CYGWIN__ || __MACH__ ||  __OpenBSD__
 #define OS_LINUX                TRUE
 #define OS_WINDOWS              FALSE
 #endif

@@ -1,3 +1,7 @@
+zerobuild - 1.1.0
+	Added experimemntal support for OpenBSD.
+- Stefan Pietzonke <jay-t@gmx.net>  Fri 18 May 2022 22:19 +0200
+
 zerobuild - 1.0.4
 	NEW: now C++ projects can be build with "force" flag set!
 	NEW: build script output now uses "/bin/bash".
