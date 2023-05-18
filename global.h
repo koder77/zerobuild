@@ -7,6 +7,10 @@
 #include <ctype.h>
 #include <stdint.h>
 
+#if __OpenBSD__
+#include <sys/wait.h>
+#endif
+
 typedef char		            U1;
 typedef int16_t                 S2;     /* INT     */
 typedef int32_t                 S4;     /* LONGINT */
