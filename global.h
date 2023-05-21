@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include <stdint.h>
 
-#if __OpenBSD__
+#if __OpenBSD__ || __FreeBSD__
 #include <sys/wait.h>
 #endif
 
