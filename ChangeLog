@@ -1,3 +1,8 @@
+zerobuild - 1.2.0
+	NEW: process.c cleanup to use system() call on MSYS2 build.
+
+- Stefan Pietzonke <jay-t@gmx.net>  Fri 13 Oct 2023 21:00 +0200
+
 zerobuild - 1.1.0
 	Added experimemntal support for OpenBSD.
 - Stefan Pietzonke <jay-t@gmx.net>  Fri 18 May 2022 22:19 +0200

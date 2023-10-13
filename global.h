@@ -14,6 +14,7 @@
 typedef char		            U1;
 typedef int16_t                 S2;     /* INT     */
 typedef int32_t                 S4;     /* LONGINT */
+typedef int64_t					S8; 
 
 /*
  zer0build makefile

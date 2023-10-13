@@ -9,7 +9,7 @@ extern U1 script_name;
 FILE *scriptf;
 
 // protos
-S4 run_process (U1 *name);
+S8 run_process (U1 *name);
 char *fgets_uni (char *str, int len, FILE *fptr);
 size_t strlen_safe (const char * str, int maxlen);
 

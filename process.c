@@ -2,12 +2,15 @@
 
 #if OS_WINDOWS
     #include <windows.h>
+	#include <stdlib.h>
     #include <errno.h>
+	
+	#define WEXITSTATUS(status) (((status) &0xff00) >> 8)
 #endif
 
 /* LINUX ------------------------------------------------------------ */
 
-#if OS_LINUX
+#if OS_LINUX || OS_WINDOWS
 
 S4 run_process (U1 *name)
 {
@@ -29,13 +32,13 @@ S4 run_process (U1 *name)
 #endif
 
 /* WINDOWS ---------------------------------------------------------- */
-
+/*
 #if OS_WINDOWS
 
-S4 run_process (U1 *name)
+S8 run_process (U1 *name)
 {
     S4 ret;
-    S4 exit_code;
+    LPDWORD *exit_code = NULL;
 
     STARTUPINFO start_info;
     PROCESS_INFORMATION process_info;
@@ -47,11 +50,13 @@ S4 run_process (U1 *name)
     {
         return (-1);
     }
-    // Wait until child process exits.
+    
     WaitForSingleObject( process_info.hProcess, INFINITE );
 
-    GetExitCodeProcess(process_info.hProcess, &exit_code);
-    return (exit_code);
+    GetExitCodeProcess(process_info.hProcess, exit_code);
+    return ((S8) exit_code);
 }
 
 #endif
+*/
+
