@@ -924,7 +924,7 @@ int main (int ac, char *av[])
     strcpy (parsed_line.aflags, "");
     strcpy (parsed_line.lflags, "");
 
-    printf ("\n\nzerobuild V1.0.4\n");
+    printf ("\n\nzerobuild V1.2.0\n");
 
 	printf ("DEBUG: ac: %i\n", ac);
 
