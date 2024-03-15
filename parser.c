@@ -679,6 +679,28 @@ S2 parse_line (U1 *line)
             printf ("cflags = '%s'\n", parsed_line.cflags);
         }
 
+        ret = strstr (line, CMDFLAGS);
+        if (ret != 0)
+        {
+            pos = (U1 *) ret - line;
+
+            search_start = pos + 1;
+            pos = search_char (line, ASSIGN, search_start);
+            if (pos == -1)
+            {
+                printf ("syntax ERROR: no assign found for cmdflags!\n");
+                return (1);
+            }
+
+            if (get_assign_in_quote (line, parsed_line.cmdflags, 4096, pos + 1) != 0)
+            {
+                printf ("syntax ERROR: can't get assign string!\n");
+                return (1);
+            }
+
+            printf ("cmdflags = '%s'\n", parsed_line.cmdflags);
+        }
+
         ret = strstr (line, CPLUSPLUSFLAGS);
         if (ret != 0)
         {
@@ -923,8 +945,9 @@ int main (int ac, char *av[])
     strcpy (parsed_line.cflags, "");
     strcpy (parsed_line.aflags, "");
     strcpy (parsed_line.lflags, "");
+    strcpy (parsed_line.cmdflags, "");
 
-    printf ("\n\nzerobuild V1.2.0\n");
+    printf ("\n\nzerobuild V1.2.1\n");
 
 	printf ("DEBUG: ac: %i\n", ac);
 

@@ -306,6 +306,8 @@ S2 make (S2 force_build_all)
         strcat (run_shell, " ");
         strcat (run_shell, parsed_line.sources[i]);
 
+        strcat (run_shell, parsed_line.cmdflags);
+
         // build
 
         printf ("'%s'\n", run_shell);
@@ -382,7 +384,6 @@ S2 make (S2 force_build_all)
         }
 
         printf ("'%s'\n", run_shell);
-
 
         if (create_script == 1)
         {
@@ -502,6 +503,12 @@ S2 make (S2 force_build_all)
         {
             strcat (run_shell, " ");
             strcat (run_shell, parsed_line.lflags);
+        }
+
+        if (strcmp (parsed_line.cmdflags, "") != 0)
+        {
+            strcat (run_shell, " ");
+            strcat (run_shell, parsed_line.cmdflags);
         }
 
         printf ("'%s'\n", run_shell);

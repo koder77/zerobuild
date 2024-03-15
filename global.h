@@ -36,6 +36,7 @@ cflags = -O0 -g
 #define ASSIGN                  '='
 #define COMMA                   ','
 #define QUOTE                   '"'
+#define BACKTICK                '`'
 #define SPACE                   ' '
 
 #define TYPE_LIBRARY            "library"
@@ -51,6 +52,8 @@ cflags = -O0 -g
 
 #define CFLAGS                  "cflags"
 #define CPLUSPLUSFLAGS          "c++flags"
+
+#define CMDFLAGS                "cmdflags"
 
 #define CCOMPILER               "ccompiler"
 #define CPLUSPLUSCOMPILER       "c++compiler"
@@ -101,6 +104,7 @@ struct parsed_line
     U1 cplusplusflags[MAXSTRLEN];
     U1 aflags[MAXSTRLEN];
     U1 lflags[MAXSTRLEN];
+    U1 cmdflags[MAXSTRLEN];
 };
 
 struct comp

@@ -1,3 +1,12 @@
+zerobuild - 1.2.1
+	NEW: Added support for cmdflags like:
+
+		`wx-config --cxxflags --libs`
+
+	for example.
+
+- Stefan Pietzonke <jay-t@gmx.net>  Fri 15 Mar 2023 07:07 +0200
+
 zerobuild - 1.2.0
 	NEW: process.c cleanup to use system() call on MSYS2 build.
 
