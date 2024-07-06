@@ -15,7 +15,7 @@ size_t strlen_safe (const char * str, int maxlen);
 
 S2 make_timestamp_dir ()
 {
-#if OS_LINUX || OS_WINDOWS
+#if OS_LINUX
     if (run_process("mkdir .timest") != 0)
     {
         printf ("ERROR creating directory .timest\n");
@@ -25,6 +25,10 @@ S2 make_timestamp_dir ()
     {
         return (0);
     }
+#else
+    // on Windows MSYS2 the mkdir command doesn't work
+    // skip it!
+    return (0);
 #endif
 }
 
