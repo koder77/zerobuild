@@ -4,6 +4,9 @@
 struct parsed_line parsed_line;
 struct comp comp;
 
+// set to 1 if *.c or *.cpp file names in build file are set!
+U1 multifile_build = 0;
+
 // protos
 S2 make (S2 force_build_all);
 size_t strlen_safe (const char * str, int maxlen);
@@ -340,8 +343,6 @@ S2 parse_line (U1 *line)
         return (0);     // line is a comment
     }
 
-
-
     // not a comment, here we go:
 
     // check for type block
@@ -530,6 +531,14 @@ S2 parse_line (U1 *line)
                 else
                 {
                     printf ("source: '%s'\n", parsed_line.sources[parsed_line.sources_ind]);
+
+                    if (search_char (parsed_line.sources[parsed_line.sources_ind], STAR, 0) != -1)
+                    {
+                        // found * in file name,
+                        multifile_build = 1;
+
+                        printf ("running multifile build: * in filename found\n");
+                    }
                 }
             }
         }
@@ -560,7 +569,7 @@ S2 parse_line (U1 *line)
 
             // sources = foo.c, bar.c, test.c
 
-
+// EDIT
             while (line_end == 0)
             {
                 if (parsed_line.includes_ind < MAXINCLUDES)
@@ -575,6 +584,20 @@ S2 parse_line (U1 *line)
                         printf ("syntax ERROR: can't get assign string!\n");
                         return (1);
                     }
+                }
+
+                // check if env variable is used
+                if (parsed_line.includes[parsed_line.includes_ind][0] == '$')
+                {
+                    get_env_var (parsed_line.includes[parsed_line.includes_ind]);
+                    env = getenv (parsed_line.includes[parsed_line.includes_ind]);
+                    if (env == NULL)
+                    {
+                        printf ("ERROR: include env variable not found: ''%s'\n", comp.c);
+                        return (1);
+                    }
+
+                    strcpy (parsed_line.includes[parsed_line.includes_ind], env);
                 }
 
                 pos = search_char (line, COMMA, pos + 1);
@@ -947,7 +970,7 @@ int main (int ac, char *av[])
     strcpy (parsed_line.lflags, "");
     strcpy (parsed_line.cmdflags, "");
 
-    printf ("\n\nzerobuild V1.2.1\n");
+    printf ("\n\nzerobuild V1.2.2\n");
 
 	printf ("DEBUG: ac: %i\n", ac);
 

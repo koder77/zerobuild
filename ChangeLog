@@ -1,3 +1,9 @@
+zerobuild - 1.2.2
+	NEW: Added ENV variables to set a include search path.
+	Like $CC and $CCPP.
+
+- Stefan Pietzonke <jay-t@gmx.net>  Sun 19 Apr 2026 20:01 +0200
+
 zerobuild - 1.2.1
 	NEW: Added support for cmdflags like:
 

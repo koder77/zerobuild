@@ -38,6 +38,7 @@ cflags = -O0 -g
 #define QUOTE                   '"'
 #define BACKTICK                '`'
 #define SPACE                   ' '
+#define STAR                    '*'
 
 #define TYPE_LIBRARY            "library"
 #define TYPE_EXECUTABLE         "executable"

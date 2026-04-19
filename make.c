@@ -11,11 +11,11 @@ FILE *scriptf;
 // protos
 S8 run_process (U1 *name);
 char *fgets_uni (char *str, int len, FILE *fptr);
-size_t strlen_safe (const char * str, int maxlen);
+size_t strlen_safe (const char * str, S8  maxlen);
 
 S2 make_timestamp_dir ()
 {
-#if OS_LINUX
+#if OS_LINUX || OS_WINDOWS
     if (run_process("mkdir .timest") != 0)
     {
         printf ("ERROR creating directory .timest\n");
@@ -25,10 +25,6 @@ S2 make_timestamp_dir ()
     {
         return (0);
     }
-#else
-    // on Windows MSYS2 the mkdir command doesn't work
-    // skip it!
-    return (0);
 #endif
 }
 
